@@ -20,6 +20,11 @@ server.get('/echo/:name', function (req, res, next) {
   res.send(req.params);
   return next();
 });
+
+server.post('/contact/new', function (req, res, next) {
+  res.send(req.body);
+  return next();
+});
  
 server.listen(8200, function () {
   console.log('%s listening at %s', server.name, server.url);

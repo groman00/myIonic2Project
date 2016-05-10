@@ -14,6 +14,7 @@ export class ContactPage {
   
   constructor(fb, httpFactory) {
 
+    this.httpFactory = httpFactory;
     this.contactForm = ControlGroup;  
 
     this.contactForm = fb.group({  
@@ -23,19 +24,18 @@ export class ContactPage {
  
     this.name = this.contactForm.controls['name'];
     this.email = this.contactForm.controls['email'];
-    
-    httpFactory
-      .get('echo/fooooo')
-      .subscribe(function(response){
-        console.log('cool response:')
-        console.log(response)
-      });
-
   }
 
   onSubmit(value){ 
       if(this.contactForm.valid) {
           console.log('Submitted value: ', value);
+
+        this.httpFactory
+          .post('contact/new', value)
+          .subscribe(function(response){
+            console.log('cool response:')
+            console.log(response)
+          });          
       }
   }
 
