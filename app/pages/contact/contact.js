@@ -1,16 +1,18 @@
 import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, AbstractControl } from 'angular2/common';
 import {Page} from 'ionic-angular';
+import {HttpFactory} from '../../services/http-factory'
 
 @Page({
   templateUrl: 'build/pages/contact/contact.html',
   directives: [FORM_DIRECTIVES]
 })
 export class ContactPage {
+  
   static get parameters() {
-    return [[FormBuilder]];
+    return [[FormBuilder], [HttpFactory]];
   }
   
-  constructor(fb) {
+  constructor(fb, httpFactory) {
 
     this.contactForm = ControlGroup;  
 
@@ -21,6 +23,13 @@ export class ContactPage {
  
     this.name = this.contactForm.controls['name'];
     this.email = this.contactForm.controls['email'];
+    
+    httpFactory
+      .get('echo/fooooo')
+      .subscribe(function(response){
+        console.log('cool response:')
+        console.log(response)
+      });
 
   }
 

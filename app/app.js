@@ -1,14 +1,13 @@
 import {App, IonicApp, Platform, MenuController} from 'ionic-angular';
+import {HttpFactory} from './services/http-factory'
 import {StatusBar} from 'ionic-native';
-//import {TabsPage} from './pages/tabs/tabs';
 import {HomePage} from './pages/home/home';
 import {ContactPage} from './pages/contact/contact';
 
-
-
 @App({
   templateUrl: 'build/app.html',
-  config: {} // http://ionicframework.com/docs/v2/api/config/Config/
+  config: {}, // http://ionicframework.com/docs/v2/api/config/Config/
+  providers: [HttpFactory]
 })
 export class MyApp {
   static get parameters() {
@@ -29,17 +28,7 @@ export class MyApp {
       { title: 'Contact Us', component: ContactPage }
     ];
 
-    // make HelloIonicPage the root (or first) page
     this.rootPage = HomePage;
-
-
-    // this.rootPage = TabsPage;
-
-    // platform.ready().then(() => {
-    //   // Okay, so the platform is ready and our plugins are available.
-    //   // Here you can do any higher level native things you might need.
-    //   StatusBar.styleDefault();
-    // });
   }
 
   initializeApp() {
