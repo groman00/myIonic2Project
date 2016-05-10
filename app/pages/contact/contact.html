@@ -6,10 +6,19 @@
 </ion-navbar>
 
 <ion-content class="contact-page">
-  <ion-list>
-    <ion-item>
-      <ion-label fixed>Your Name</ion-label>
-      <ion-input type="text" value=""></ion-input>
-    </ion-item>
-  </ion-list>
+    <form [ngFormModel]="contactForm" (ngSubmit)="onSubmit(contactForm.value)">
+      <ion-list>
+        <ion-item>
+          <ion-label fixed>Your Name:</ion-label>
+          <ion-input type="text" value="" [ngFormControl]="name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed>Your Email:</ion-label>
+          <ion-input type="email" value="" [ngFormControl]="email"></ion-input>
+        </ion-item>    
+        <ion-item>
+            <button type="submit" [disabled]="!contactForm.valid" block>Submit</button>
+        </ion-item>
+      </ion-list>
+    </form>
 </ion-content>
