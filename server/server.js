@@ -22,7 +22,8 @@ server.get('/echo/:name', function (req, res, next) {
 });
 
 server.post('/contact/new', function (req, res, next) {
-  res.send(req.body);
+  var params = JSON.parse(req.body);
+  res.send(params);
   return next();
 });
  

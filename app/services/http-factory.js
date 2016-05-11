@@ -4,13 +4,6 @@ import 'rxjs/Rx';
 //For more on http:
 //https://angular.io/docs/js/latest/api/http/Http-class.html
 
-function serializeObj(obj) {
-    var result = [];
-    for (var property in obj)
-        result.push(encodeURIComponent(property) + "=" + encodeURIComponent(obj[property]));
-    return result.join("&");
-}
-
 export class HttpFactory {
   
   static get parameters() {
@@ -30,7 +23,7 @@ export class HttpFactory {
 
   post(url, body) {
     return this.http
-      .post(this.api + url, serializeObj(body))
+      .post(this.api + url, JSON.stringify(body))
       .map(res => res.json())    
   }
 }
