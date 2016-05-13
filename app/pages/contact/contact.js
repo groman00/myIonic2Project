@@ -34,7 +34,8 @@ export class ContactPage {
           .post('contact/new', value)
           .subscribe(function(response){
             console.log('cool response:')
-            console.log(response)
+            console.log(response);
+            alert(JSON.stringify(response));
           });          
       }
   }
