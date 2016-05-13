@@ -24,9 +24,10 @@ export class MyApp {
 
     // set our app's pages
     this.pages = [
-      { title: 'Hello Ionic', component: HomePage },
-      { title: 'Contact Us', component: ContactPage }
+      { title: 'Hello Ionic', component: HomePage }
     ];
+    // ,
+    //   { title: 'Contact Us', component: ContactPage }
 
     this.rootPage = HomePage;
   }

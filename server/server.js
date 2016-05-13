@@ -30,12 +30,17 @@ var contactSchema = new Schema({
 
 var Contact = mongoose.model('Contact', contactSchema);
 
-server.get('/echo/:name', function (req, res, next) {
-  res.send(req.params);
+server.get('/contacts/', function (req, res, next) {
+  Contact.find({}, function(err, contacts){
+      res.send({
+        "status": "success",
+        "contacts": contacts
+      });      
+  });
   return next();
 });
 
-server.post('/contact/new', function (req, res, next) {
+server.post('/contacts/new', function (req, res, next) {
   var params = JSON.parse(req.body);
   var contact = new Contact(params);
 
@@ -50,7 +55,7 @@ server.post('/contact/new', function (req, res, next) {
 
     Contact.find({}, function(err, contacts){
         res.send({
-          "status": "sucess",
+          "status": "success",
           "contacts": contacts
         });      
     });

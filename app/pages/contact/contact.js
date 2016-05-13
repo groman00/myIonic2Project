@@ -1,5 +1,5 @@
 import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, AbstractControl } from 'angular2/common';
-import {Page} from 'ionic-angular';
+import {Page, ViewController} from 'ionic-angular';
 import {HttpFactory} from '../../services/http-factory'
 
 @Page({
@@ -9,12 +9,13 @@ import {HttpFactory} from '../../services/http-factory'
 export class ContactPage {
   
   static get parameters() {
-    return [[FormBuilder], [HttpFactory]];
+    return [[FormBuilder], [HttpFactory], [ViewController]];
   }
   
-  constructor(fb, httpFactory) {
+  constructor(fb, httpFactory, viewCtrl) {
 
     this.httpFactory = httpFactory;
+    this.viewCtrl = viewCtrl;
     this.contactForm = ControlGroup;  
 
     this.contactForm = fb.group({  
@@ -28,15 +29,13 @@ export class ContactPage {
 
   onSubmit(value){ 
       if(this.contactForm.valid) {
-          console.log('Submitted value: ', value);
+        console.log('Submitted value: ', value);
 
         this.httpFactory
-          .post('contact/new', value)
+          .post('contacts/new', value)
           .subscribe(function(response){
-            console.log('cool response:')
-            console.log(response);
-            alert(JSON.stringify(response));
-          });          
+            this.viewCtrl.dismiss(response.contacts);
+          }.bind(this));          
       }
   }
 
@@ -44,6 +43,10 @@ export class ContactPage {
       if (control.value.match(/^\d/)) {  
           return {checkFirstCharacterValidator: true};  
       }       
+  }
+
+  close(e){
+    this.viewCtrl.dismiss();
   }
 
 }
