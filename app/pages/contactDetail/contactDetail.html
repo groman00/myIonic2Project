@@ -1,0 +1,23 @@
+<ion-toolbar>
+  <ion-buttons start>
+    <button royal (click)="close()">
+      Cancel
+    </button>
+  </ion-buttons>
+  <ion-buttons end>
+    <button danger (click)="delete()">
+      Delete
+    </button>
+  </ion-buttons>  
+</ion-toolbar>
+
+<ion-content class="contact-detail">
+    <ion-card>
+      <ion-card-header>
+        {{contact.name}}
+      </ion-card-header>
+      <ion-card-content>
+        {{contact.email}}
+      </ion-card-content>
+    </ion-card>
+</ion-content>

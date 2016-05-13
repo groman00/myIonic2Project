@@ -1,6 +1,7 @@
 import {HttpFactory} from '../../services/http-factory'
 import {NavController, Page, Modal} from 'ionic-angular';
 import {ContactPage} from '../contact/contact';
+import {ContactDetail} from '../contactDetail/contactDetail';
 
 @Page({
   templateUrl: 'build/pages/home/home.html'
@@ -16,7 +17,11 @@ export class HomePage {
     this.refreshContacts();
   }
 
-  refreshContacts(){
+  refreshContacts(contacts){
+    if(contacts){
+      this.contacts = contacts;
+      return false;
+    }
     this.httpFactory
       .get('contacts')
       .subscribe(function(response){
@@ -25,14 +30,14 @@ export class HomePage {
   }
 
   openNewContact(e) {
-    console.log(this)
-      let modal = Modal.create(ContactPage);
-      modal.onDismiss(function(data){
-        if(data){
-          this.refreshContacts();
-        }
-      }.bind(this));
-      this.nav.present(modal)
+    let modal = Modal.create(ContactPage);
+    modal.onDismiss(this.refreshContacts.bind(this));
+    this.nav.present(modal)
+  }
 
-  }   
+  contactTapped(e, contact){
+    let modal = Modal.create(ContactDetail, contact);
+    modal.onDismiss(this.refreshContacts.bind(this));
+    this.nav.present(modal)
+  }
 }

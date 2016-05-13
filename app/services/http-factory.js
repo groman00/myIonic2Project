@@ -26,4 +26,10 @@ export class HttpFactory {
       .post(this.api + url, JSON.stringify(body))
       .map(res => res.json())    
   }
+
+  delete(url) {
+    return this.http
+      .delete(this.api + url)
+      .map(res => res.json())    
+  }  
 }

@@ -64,6 +64,26 @@ server.post('/contacts/new', function (req, res, next) {
   return next();
 });
  
+server.del('/contacts/:id', function (req, res, next) {
+  Contact.remove({"_id": req.params.id}, function(err){
+    var status = "success";
+    if (err) {
+      res.send({
+        "status": "error"
+      });
+    }
+
+    Contact.find({}, function(err, contacts){
+        res.send({
+          "status": "success",
+          "contacts": contacts
+        });      
+    });      
+  });
+  return next();
+});
+
+
 server.listen(8200, function () {
   console.log('%s listening at %s', server.name, server.url);
 });
