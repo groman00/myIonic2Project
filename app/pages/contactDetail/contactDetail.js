@@ -10,9 +10,10 @@ export class ContactDetail {
     return [[ViewController], [NavParams], [HttpFactory]];
   }
   
-  constructor(viewCtrl, params, httpFactory) {
+  constructor(viewCtrl, navParams, httpFactory) {
     this.viewCtrl = viewCtrl;
-    this.contact = params.data;
+    this.navParams = navParams;
+    this.contact = this.navParams.get("contact");
     this.httpFactory = httpFactory;
   }
 
@@ -24,7 +25,8 @@ export class ContactDetail {
     this.httpFactory
       .delete('contacts/' + this.contact._id)
       .subscribe(function(response){
-        this.viewCtrl.dismiss(response.contacts);
+        this.navParams.get("homePage").contacts = response.contacts;
+        this.viewCtrl.dismiss();
       }.bind(this)); 
   }
 

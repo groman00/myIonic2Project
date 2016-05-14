@@ -14,14 +14,10 @@ export class HomePage {
   constructor(nav, httpFactory) {
     this.nav = nav;
     this.httpFactory = httpFactory;
-    this.refreshContacts();
+    this.loadContacts();
   }
 
-  refreshContacts(contacts){
-    if(contacts){
-      this.contacts = contacts;
-      return false;
-    }
+  loadContacts(contacts){
     this.httpFactory
       .get('contacts')
       .subscribe(function(response){
@@ -30,14 +26,19 @@ export class HomePage {
   }
 
   openNewContact(e) {
-    let modal = Modal.create(ContactPage);
-    modal.onDismiss(this.refreshContacts.bind(this));
+    let modal = Modal.create(ContactPage, {homePage: this});
     this.nav.present(modal)
   }
 
+  // onPageWillEnter(){
+  //   console.log("page entered");
+  //   console.log(this);
+  // }
+
   contactTapped(e, contact){
-    let modal = Modal.create(ContactDetail, contact);
-    modal.onDismiss(this.refreshContacts.bind(this));
-    this.nav.present(modal)
+    this.nav.push(ContactDetail, {
+      "contact": contact,
+      homePage: this
+    });    
   }
 }

@@ -1,5 +1,5 @@
 import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, AbstractControl } from 'angular2/common';
-import {Page, ViewController} from 'ionic-angular';
+import {Page, ViewController, NavParams} from 'ionic-angular';
 import {HttpFactory} from '../../services/http-factory'
 
 @Page({
@@ -7,15 +7,15 @@ import {HttpFactory} from '../../services/http-factory'
   directives: [FORM_DIRECTIVES]
 })
 export class ContactPage {
-  
   static get parameters() {
-    return [[FormBuilder], [HttpFactory], [ViewController]];
+    return [[FormBuilder], [HttpFactory], [ViewController], [NavParams]];
   }
   
-  constructor(fb, httpFactory, viewCtrl) {
+  constructor(fb, httpFactory, viewCtrl, navParams) {
 
     this.httpFactory = httpFactory;
     this.viewCtrl = viewCtrl;
+    this.navParams = navParams;
     this.contactForm = ControlGroup;  
 
     this.contactForm = fb.group({  
@@ -34,7 +34,8 @@ export class ContactPage {
         this.httpFactory
           .post('contacts/new', value)
           .subscribe(function(response){
-            this.viewCtrl.dismiss(response.contacts);
+            this.navParams.get("homePage").contacts = response.contacts;
+            this.viewCtrl.dismiss();
           }.bind(this));          
       }
   }
